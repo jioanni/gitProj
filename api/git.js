@@ -5,4 +5,9 @@ router.get('/', (req, res, next) => {
     res.send("Boom goes the dynamite.")
 })
 
+router.post('/', (req, res, next) => {
+    const body = req.body
+    res.send(body)
+})
+
 module.exports = router
