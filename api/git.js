@@ -6,8 +6,10 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    const body = req.body
-    res.send(body)
+    const added = req.body.commits.added
+    const modified = req.body.commits.added
+    const updates = added.concat(modified)
+    res.send(updates)
 })
 
 module.exports = router
