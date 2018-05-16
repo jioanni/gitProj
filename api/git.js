@@ -6,8 +6,10 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-    const added = req.body.commits.added
-    const modified = req.body.commits.added
+    let added;
+    let modified;
+    req.body.commits.added.length > 0 ?  added = req.body.commits.added : []
+    req.body.commits.modified.length > 0 ? modified = req.body.commits.added : []
     const updates = added.concat(modified)
     res.send(updates)
 })
