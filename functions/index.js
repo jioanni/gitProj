@@ -1,4 +1,5 @@
 const axios = require('axios')
+const base = require('base-64')
 
 
 const commitConsolidator = (arr) => {       /* this function consolidates all "added" or "modified" to a 
@@ -27,14 +28,18 @@ const arrayCleaner = (arr) => {                 //this function removes repeats
     return cleanArray
 }
 
-const requester = (arr) => {                    //this function will ultimately propagate the requests to individual files in repositores
-    const responses = []                        //right now it only makes ONE request with the first URL because of rate limiting.
-    console.log(arr[0])
-    axios.get(arr[0])
-        .then(resp => responses.push(resp))
+const requester = (arr) => {                    
+    const responses = []                    
+    console.log(arr)
+    axios.get(arr[1])
+        .then(resp => {console.log(base.decode(resp.data.content))})
         .catch(Error)
 
-    return responses
+    
 }
 
 module.exports = {arrayCleaner, commitConsolidator, requester}
+
+
+
+
