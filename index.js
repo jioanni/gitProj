@@ -3,7 +3,7 @@ const app = express()
 const volleyball = require('volleyball')
 const bodyParser = require('body-parser')
 const path = require('path')
-const PORT = 3333
+const PORT = process.env.PORT || 3333
 
 app.use(volleyball)
 app.use(bodyParser.json())
