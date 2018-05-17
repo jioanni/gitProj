@@ -19,6 +19,8 @@ const commitConsolidator = (arr) => {       /* this function consolidates all "a
     return urls
 }
 
+
+
 const arrayCleaner = (arr) => {                 //this function removes repeats
     let cleanArray = [];
     arr.forEach(ele => {
@@ -28,14 +30,20 @@ const arrayCleaner = (arr) => {                 //this function removes repeats
     return cleanArray
 }
 
-const requester = (arr) => {                    
-    const responses = []                    
-    console.log(arr)
-    axios.get(arr[1])
-        .then(resp => {console.log(base.decode(resp.data.content))})
-        .catch(Error)
+
+
+const requester = (arr) => {                                     //Generates responses based on the contents of the passed URL array
+    const responses = arr.forEach(async ele => {   
+        const resp = await axios.get(ele)
+        responses.push(base.decode(resp.data.content))
+        console.log(base.decode(resp.data.content))
+        console.log(responses)
+    }).catch(Error)
 
     
+
+    return responses
+
 }
 
 module.exports = {arrayCleaner, commitConsolidator, requester}
