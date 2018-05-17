@@ -43,18 +43,11 @@ const requester = async arr => {
   }
 
 const fileWriter = async (files) => {
-    // const promises = [];
-    // files.forEach(ele => {
-    //     promises.push(fs.writeFile('testFile' + Math.floor(Math.random() * 100) + '.txt', ele, 'utf8'))
-    // })
-    // console.log(promises)
-    // return Promise.all(promises)
+
     const fileNum = 0;
     await Promise.all(files.map(async ele => {
         await fs.writeFile('testFile' + Math.floor(Math.random() * 100) + '.txt', ele, 'utf8')
-    })).catch(err => console.error(err))
-    
-    
+    })).catch(err => console.error(err))   
 }
 
 
