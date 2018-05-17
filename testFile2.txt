@@ -1,6 +1,5 @@
 const axios = require('axios')
 const base = require('base-64')
-const fs = require('fs')
 
 
 const commitConsolidator = (arr) => {       /* this function consolidates all "added" or "modified" to a 
@@ -20,8 +19,6 @@ const commitConsolidator = (arr) => {       /* this function consolidates all "a
     return urls
 }
 
-
-
 const arrayCleaner = (arr) => {                 //this function removes repeats
     let cleanArray = [];
     arr.forEach(ele => {
@@ -31,35 +28,17 @@ const arrayCleaner = (arr) => {                 //this function removes repeats
     return cleanArray
 }
 
+const requester = (arr) => {                    
+    const responses = []                    
+    console.log(arr)
+    axios.get(arr[1])
+        .then(resp => {console.log(base.decode(resp.data.content))})
+        .catch(Error)
 
-const requester = async arr => {
-    const responses = []
-    await Promise.all(arr.map(async ele=> {
-      const resp = await axios.get(ele)
-      responses.push(base.decode(resp.data.content))
-    }))
-
-    return responses
-  }
-
-const fileWriter = async (files) => {
-    // const promises = [];
-    // files.forEach(ele => {
-    //     promises.push(fs.writeFile('testFile' + Math.floor(Math.random() * 100) + '.txt', ele, 'utf8'))
-    // })
-    // console.log(promises)
-    // return Promise.all(promises)
-    const fileNum = 0;
-    await Promise.all(files.map(async ele => {
-        await fs.writeFile('testFile' + Math.floor(Math.random() * 100) + '.txt', ele, 'utf8')
-    })).catch(err => console.error(err))
-    
     
 }
 
-
-
-module.exports = {arrayCleaner, commitConsolidator, requester, fileWriter}
+module.exports = {arrayCleaner, commitConsolidator, requester}
 
 
 
