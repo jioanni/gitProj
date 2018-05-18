@@ -3,8 +3,9 @@ const base = require('base-64')
 const fs = require('fs')
 
 
-const commitConsolidator = (arr) => {       /* this function consolidates all "added" or "modified" to a 
-                                            single array after iterating over the commit object */
+//COMMIT CONSOLIDATOR - Consolidates all of the "added" or "modified" entries in a push log to a single array.
+
+const commitConsolidator = (arr) => {     
     let consolidated = [];
     arr.forEach(ele => {
         if (ele.added.length > 0) consolidated = consolidated.concat(ele.added)
@@ -22,7 +23,9 @@ const commitConsolidator = (arr) => {       /* this function consolidates all "a
 
 
 
-const arrayCleaner = (arr) => {                 //this function removes repeats
+//ARRAY CLEANER - Removes repeat entries from the consolidated data array.
+
+const arrayCleaner = (arr) => {                 
     let cleanArray = [];
     arr.forEach(ele => {
         if (cleanArray.indexOf(ele) === -1) cleanArray.push(ele)
@@ -32,15 +35,19 @@ const arrayCleaner = (arr) => {                 //this function removes repeats
 }
 
 
+//REQUEST GENERATOR - Generates requests off array of URLs in the previous function.
+
 const requester = async arr => {
     const responses = []
     await Promise.all(arr.map(async ele=> {
-      const resp = await axios.get(ele)
+      const resp = await axios({ method: 'GET', url: ele/*, headers: {"Accept" : "application/vnd.github.v3.raw"}*/})
       responses.push(base.decode(resp.data.content))
     }))
 
     return responses
   }
+
+//FILE WRITER - Writes content of files on GitHub to filesystem. 
 
 const fileWriter = async (files) => {
 
@@ -53,6 +60,8 @@ const fileWriter = async (files) => {
 
 
 module.exports = {arrayCleaner, commitConsolidator, requester, fileWriter}
+
+
 
 
 
